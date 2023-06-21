@@ -1,4 +1,7 @@
 ﻿using AgendaDotNet6MVC.Context;
+using AgendaDotNet6MVC.Repositories;
+using AgendaDotNet6MVC.Repositories.Interfaces;
+using AgendaDotNet6MVC.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaDotNet6MVC
@@ -17,6 +20,10 @@ namespace AgendaDotNet6MVC
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddTransient<IEventoRepository, EventoRepository>();
+            services.AddTransient<EventoService>();
+
+            
             services.AddControllersWithViews();
 
         }

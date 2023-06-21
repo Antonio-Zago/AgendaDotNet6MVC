@@ -7,5 +7,7 @@
         public string Nome { get; set; }
 
         public Byte[] Simbolo { get; set; }
+
+        public ICollection<Evento> Eventos { get; set; }
     }
 }

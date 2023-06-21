@@ -8,12 +8,6 @@ namespace AgendaDotNet6MVC.Controllers
     public class HomeController : Controller
     {
 
-        private readonly AppDbContext appDbContext;
-
-        public HomeController(AppDbContext appDbContext)
-        {
-            this.appDbContext = appDbContext;
-        }
 
         public IActionResult Index()
         {
