@@ -14,7 +14,7 @@ namespace AgendaDotNet6MVC.Services
             this.eventoRepository = eventoRepository;
         }
 
-        public List<EventoListViewModel> GetEventos()
+        public IEnumerable<IGrouping<string, EventoListViewModel>> GetEventos()
         {
             var eventos = eventoRepository.Eventos.OrderBy(e => e.Data);
             List<EventoListViewModel> eventosListViewModel = new List<EventoListViewModel>();
@@ -29,12 +29,69 @@ namespace AgendaDotNet6MVC.Services
                     DiaSemana = new CultureInfo("pt-BR").DateTimeFormat.GetDayName(evento.Data.DayOfWeek)
                 };
 
+                VerificarindicadorData(eventoListViewModel, evento);
                 eventosListViewModel.Add(eventoListViewModel);
 
 
             }
 
-            return eventosListViewModel;
+            return eventosListViewModel.GroupBy(e => e.IndicadorData);
+        }
+
+        private void VerificarindicadorData(EventoListViewModel eventoListViewModel, Evento evento)
+        {
+            if (evento.Data.Date < DateTime.Today.Date)
+            {
+                eventoListViewModel.IndicadorData = "Eventos passados";
+            }
+            else if (evento.Data.Date == DateTime.Today.Date)
+            {
+                eventoListViewModel.IndicadorData = "Hoje";
+
+            }
+            else if (evento.Data.Date == DateTime.Today.Date.AddDays(1))
+            {
+                eventoListViewModel.IndicadorData = "Amanhã";
+            }
+            else if (VerificarSeDiaEstaNessaSemana(evento.Data) )
+            {
+                eventoListViewModel.IndicadorData = "Essa semana";
+            }
+            else if (VerificarSeDiaEsteMes(evento.Data))
+            {
+                eventoListViewModel.IndicadorData = "Esse mês";
+            }
+            else 
+            {
+                eventoListViewModel.IndicadorData = new CultureInfo("pt-BR").DateTimeFormat.GetMonthName(evento.Data.Month);
+            }
+            
+
+        }
+
+        private bool VerificarSeDiaEstaNessaSemana(DateTime dia)
+        {
+            var diaSemanaHoje = DateTime.Today.DayOfWeek;
+            var diaSemanaDia = dia.DayOfWeek;
+
+            if (dia.Date >= DateTime.Today.Date && dia.Date <= DateTime.Today.Date.AddDays(7) && diaSemanaDia> diaSemanaHoje)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        private bool VerificarSeDiaEsteMes(DateTime dia)
+        {
+            var diaSemanaHoje = DateTime.Today.DayOfWeek;
+            var diaSemanaDia = dia.DayOfWeek;
+
+            if (dia.Date >= DateTime.Today.Date && dia.Month == DateTime.Today.Month && dia.Year == DateTime.Today.Year)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

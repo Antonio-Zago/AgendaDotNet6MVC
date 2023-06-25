@@ -11,5 +11,9 @@ namespace AgendaDotNet6MVC.ViewModels
         public string Hora { get; set; }
 
         public string DiaSemana { get; set; }
+
+        public string IndicadorData { get; set; }
+
+
     }
 }

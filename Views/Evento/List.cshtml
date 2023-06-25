@@ -1,13 +1,19 @@
-﻿@model List<EventoListViewModel>
+﻿@model IEnumerable<IGrouping<string, EventoListViewModel>>
 
 <ul class="list-group">
-	@foreach(var evento in Model){
-		<li class="list-group-item" aria-current="true">
+	@foreach(var grupo in Model){
+		<div>
+			@grupo.Key
+		</div>
+		@foreach(var evento in grupo){
+			<li class="list-group-item" aria-current="true">
 			<div class="d-flex w-100 justify-content-between">
 				  <h5 class="mb-1">@evento.Nome</h5>
 				  <small>@evento.DiaSemana @evento.Data  - @evento.Hora</small>
 			</div>
 		</li>
+		}
+		
 	}
 	
 </ul>
