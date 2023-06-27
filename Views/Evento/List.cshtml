@@ -1,21 +1,39 @@
 ﻿@model IEnumerable<IGrouping<string, EventoListViewModel>>
 
-@foreach(var grupo in Model){
-	<div>
-		@grupo.Key
-	</div>
-	<ul class="list-group">
+@foreach (var grupo in Model)
+{
+    <div>
+        <button class="mb-3 col-4  btn btn-info" type="button" data-toggle="collapse" data-target="#grupo-@grupo.GetHashCode()" aria-expanded="false">@grupo.Key</button>
+        
+    </div>
+    <div class="collapse multi-collapse" id="grupo-@grupo.GetHashCode()">
+    
+        @foreach(var evento in grupo){
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">
+                    <button class="btn col-12" type="button" data-toggle="collapse" data-target="#evento-@evento.Id" aria-expanded="true">
+                      <h6>
+                          @evento.Nome
+                      </h6>
+                        
+                    </button>
+                  </h5>
+                </div>
 
-			@foreach(var evento in grupo){
-				<li class="list-group-item" aria-current="true">
-					<div class="d-flex w-100 justify-content-between">
-						  <h5 class="mb-1">@evento.Nome</h5>
-						  <small>@evento.DiaSemana @evento.Data  - @evento.Hora</small>
-					</div>
-				</li>
-			}
-		
-	
-	</ul>
-	<br />
+                <div id="evento-@evento.Id" class="collapse" data-parent="#accordionExample">
+                  <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non alemanha 0 x 2 coreia do sul cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+        }
+    </div>
+        
 }
+
+
+

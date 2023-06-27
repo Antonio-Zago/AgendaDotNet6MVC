@@ -23,6 +23,7 @@ namespace AgendaDotNet6MVC.Services
             {
                 var eventoListViewModel = new EventoListViewModel
                 {
+                    Id = evento.Id,
                     Nome = evento.Nome,
                     Data = evento.Data.Date.ToString("dd/MM/yyyy"),
                     Hora = evento.Data.Date.ToString("hh:mm"),
